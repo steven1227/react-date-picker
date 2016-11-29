@@ -813,10 +813,11 @@ export default class DateField extends Component {
   onPickerChange(dateString, { dateMoment, forceUpdate }, event) {
     const isEnter = event && event.key == 'Enter'
     const updateOnDateClick = forceUpdate ? true : this.props.updateOnDateClick || isEnter
-    console.log('OnpickerChange',dateString,dateMoment);
-    if (updateOnDateClick) {
-      forwardTime(this.time, dateMoment)
 
+    if (updateOnDateClick) {
+
+      forwardTime(this.time, dateMoment)
+      console.log('OnpickerChange inside',dateString,this.time,dateMoment);
       this.setDate(dateString, { dateMoment })
 
       if (this.props.collapseOnDateClick || isEnter) {
@@ -872,7 +873,7 @@ export default class DateField extends Component {
     if (this.props.onChange) {
       this.props.onChange(this.format(dateMoment), { dateMoment })
     }
-
+    console.log("onchange for state",newState)
     this.setState(newState)
   }
 
