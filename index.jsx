@@ -107,16 +107,32 @@ var App = React.createClass({
     },
 
     render: function(){
+
+            //         ref={(dateField) => { this.startDateField = dateField}}
+            //   dateFormat="YYYY-MM-DD HH:mm:ss"
+            //   forceValidDate={true}
+            //   updateOnDateClick={false}
+            //   defaultValue={startTime}
+            //   value={startTime}
+            //   onChange={(dateString, {dateMoment, timestamp}) => {
+            // this.handleStartTimeChange(dateMoment)
         range = this.props.range || range
         date = this.props.date || date
-
+        let rendong_time = '2015-04-24 10:38:45'
         return <div style={{margin: 10}}>
+        <h1>testing</h1>
+        <div>
+          <DateField forceValidDate={true} defaultValue={rendong_time} updateOnDateClick={false}  dateFormat="YYYY-MM-DD HH:mm:ss"/>
+          <TransitionView transitionDuration="0.1s">
+           <Calendar style={{padding: 10}}/>
+            {/*<MonthView dateFormat="DD/MM/YYYY" defaultDate="20/04/2016" onChange={() => {}}/>*/}
+          </TransitionView>
+        </div>
+        <hr/>
         {/*<DateField pattern={false} dateFormat="YYYY MM DD" />
         <TransitionView transitionDuration="0.1s">
           <MonthView dateFormat="DD/MM/YYYY" defaultDate="20/04/2016" onChange={() => {}}/>
         </TransitionView>
-
-
         <br />
         */}
         {/*<TimeInput format="hh:mm:ss A" xonChange={this.onTimeChange} defaultValue={this.state.time}/>*/}
@@ -125,6 +141,7 @@ var App = React.createClass({
             dateFormat="YYYY-MM-DD"
           />
 
+  
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}

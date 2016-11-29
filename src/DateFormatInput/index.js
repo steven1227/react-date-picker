@@ -281,6 +281,8 @@ export default class DateFormatInput extends Component {
       stop: false
     }
 
+    console.log('timer change event',config);
+
     if (this.props.afterKeyDown && type == 'keydown') {
       this.props.afterKeyDown(config)
     }

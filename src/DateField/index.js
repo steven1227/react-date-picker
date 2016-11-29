@@ -52,7 +52,7 @@ export default class DateField extends Component {
 
   render() {
     const props = this.prepareProps(this.props)
-
+    // console.log(props)
     const flexProps = assign({}, props)
 
     delete flexProps.activeDate
@@ -496,8 +496,10 @@ export default class DateField extends Component {
 
   onFooterTodayClick() {
     const today = this.toMoment(new Date())
-                    .startOf('day')
-
+                    .startOf('second')
+    console.log(today);
+    console.log(this.toMoment(new Date())
+                    .startOf('day'));
     this.onPickerChange(this.format(today), { dateMoment: today })
     this.onViewDateChange(today)
     this.onActiveDateChange(today)
@@ -552,12 +554,14 @@ export default class DateField extends Component {
   }
 
   onViewDateChange(viewDate) {
+    console.log('onViewDateChange',viewDate);
     this.setState({
       viewDate
     })
   }
 
   onActiveDateChange(activeDate) {
+    console.log('onActiveDateChange', activeDate)
     this.setState({
       activeDate
     })
@@ -809,7 +813,7 @@ export default class DateField extends Component {
   onPickerChange(dateString, { dateMoment, forceUpdate }, event) {
     const isEnter = event && event.key == 'Enter'
     const updateOnDateClick = forceUpdate ? true : this.props.updateOnDateClick || isEnter
-
+    console.log('OnpickerChange',dateString,dateMoment);
     if (updateOnDateClick) {
       forwardTime(this.time, dateMoment)
 
@@ -838,7 +842,7 @@ export default class DateField extends Component {
         })
       }
     }
-
+    console.log('setDate',dateMoment);
     this.onTextChange(this.format(dateMoment))
     this.onChange(dateMoment)
   }
