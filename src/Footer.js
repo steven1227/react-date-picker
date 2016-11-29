@@ -174,7 +174,7 @@ Footer.defaultProps = {
   okButton: true,
   cancelButton: true,
 
-  todayButtonText: 'Today',
+  todayButtonText: 'Now', // the original text is Today
   clearButtonText: 'Clear',
   okButtonText: 'OK',
   cancelButtonText: 'Cancel',

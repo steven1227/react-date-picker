@@ -65,7 +65,12 @@ const handleUpdate = (value, format, { range }) => {
 }
 
 const handleUnidentified = (format, { event, currentValue, range }) => {
-  const newChar = String.fromCharCode(event.which)
+
+  let newChar = String.fromCharCode(event.which)
+  if(event.which > 96 && event.which < 105){
+    newChar = String.fromCharCode(event.which-48)
+  }
+
   let index = range.start - format.start
 
   const caretPos = { start: range.start + 1 }
