@@ -122,7 +122,8 @@ var App = React.createClass({
         return <div style={{margin: 10}}>
         <h1>testing</h1>
         <div>
-          <DateField forceValidDate={true} defaultValue={rendong_time} updateOnDateClick={false}  dateFormat="YYYY-MM-DD HH:mm:ss"/>
+          <DateField forceValidDate={true}  clearButton={false}
+          todayButtonText={'nownownow'}  defaultValue={rendong_time} updateOnDateClick={false}  dateFormat="YYYY-MM-DD HH:mm:ss"/>
           <TransitionView transitionDuration="0.1s">
            <Calendar style={{padding: 10}}/>
             {/*<MonthView dateFormat="DD/MM/YYYY" defaultDate="20/04/2016" onChange={() => {}}/>*/}
@@ -141,7 +142,7 @@ var App = React.createClass({
             dateFormat="YYYY-MM-DD"
           />
 
-  
+
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}

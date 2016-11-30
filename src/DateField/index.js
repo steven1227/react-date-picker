@@ -83,6 +83,8 @@ export default class DateField extends Component {
     delete flexProps.text
     delete flexProps.theme
     delete flexProps.updateOnDateClick
+    delete flexProps.clearButton
+    delete flexProps.todayButtonText
 
     if (typeof props.cleanup == 'function') {
       props.cleanup(flexProps)
@@ -399,13 +401,13 @@ export default class DateField extends Component {
         },
 
         footer,
-
         focusOnNavMouseDown: false,
         focusOnFooterMouseDown: false,
 
         insideField: true,
         showClock: props.showClock,
-
+        todayButtonText:this.props.todayButtonText,
+        clearButton:this.props.clearButton,
         getTransitionTime: this.getTime,
 
         updateOnWheel: props.updateOnWheel,
