@@ -288,7 +288,6 @@ export default class DateFormatInput extends Component {
     }
 
     if (!config.stop && newCaretPos !== undefined) {
-      console.log('timer change event',newValue, updateCaretPos, { key, oldValue: valueStr, currentPosition });
       const updateCaretPos = () => this.setCaretPosition(newCaretPos)
       this.caretPos = newCaretPos
       this.setStateValue(newValue, updateCaretPos, { key, oldValue: valueStr, currentPosition })
@@ -367,7 +366,6 @@ export default class DateFormatInput extends Component {
       value = this.format(dateMoment)
     }
 
-    console.log('set state',value);
     this.setState({
       value,
       propsValue: false

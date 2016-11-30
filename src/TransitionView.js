@@ -259,6 +259,7 @@ export default class TransitionView extends Component {
     delete flexProps.onTransitionEnd
     delete flexProps.onTransitionStart
     delete flexProps.theme
+    delete flexProps.transitionDuration
 
     return <Flex
       column

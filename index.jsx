@@ -145,7 +145,7 @@ var App = React.createClass({
         <br />
         <TimePicker timeFormat="HH:mm:ss" defaultTime style={{minHeight: 200, minWidth: 200}}/>
         <br />*/}
-        <HistoryView maxDate={Date.now()} />
+        {/*<HistoryView maxDate={Date.now()} />
             <MonthView
 
       dateFormat="YYYY-MM-DD"
@@ -160,7 +160,7 @@ var App = React.createClass({
 
             {<TransitionView>
             <MultiMonthView highlightRangeOnMouseMove defaultRange={[]} size={4}
-            /></TransitionView>}
+            /></TransitionView>}*/}
 
         <br />
 

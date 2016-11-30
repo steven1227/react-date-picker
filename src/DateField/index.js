@@ -40,6 +40,7 @@ export default class DateField extends Component {
     super(props)
 
     this.state = {
+      toggleNow:false,
       value: props.defaultValue === undefined ? '' : props.defaultValue,
       expanded: props.defaultExpanded || false,
       focused: false
@@ -52,7 +53,6 @@ export default class DateField extends Component {
 
   render() {
     const props = this.prepareProps(this.props)
-    // console.log(props)
     const flexProps = assign({}, props)
 
     delete flexProps.activeDate
@@ -87,7 +87,6 @@ export default class DateField extends Component {
     if (typeof props.cleanup == 'function') {
       props.cleanup(flexProps)
     }
-
     return <Flex
       inline
       row
@@ -270,6 +269,7 @@ export default class DateField extends Component {
     props.children = React.Children.toArray(props.children)
 
     props.expanded = this.prepareExpanded(props)
+
     props.pickerProps = this.preparePickerProps(props)
 
     const input = props.children.filter(FIND_INPUT)[0]
@@ -298,7 +298,6 @@ export default class DateField extends Component {
     }
 
     props.className = this.prepareClassName(props)
-
     return props
   }
 
@@ -430,7 +429,7 @@ export default class DateField extends Component {
         date: date || null,
 
         tabIndex: -1,
-
+        toggleNow: this.state.toggleNow,
         viewDate,
         activeDate,
         locale: props.locale,
@@ -438,6 +437,7 @@ export default class DateField extends Component {
         onViewDateChange: this.onViewDateChange,
         onActiveDateChange: this.onActiveDateChange,
         onTimeChange: this.onTimeChange,
+        oncloseNow: this.oncloseNow,
 
         onTransitionStart: this.onTransitionStart,
 
@@ -455,8 +455,9 @@ export default class DateField extends Component {
   }
 
   onTimeChange(value, timeFormat) {
-    const timeMoment = this.toMoment(value, { dateFormat: timeFormat })
 
+    const timeMoment = this.toMoment(value, { dateFormat: timeFormat })
+   
     const time = ['hour', 'minute', 'second', 'millisecond'].reduce((acc, part) => {
       acc[part] = timeMoment.get(part)
       return acc
@@ -497,12 +498,23 @@ export default class DateField extends Component {
   onFooterTodayClick() {
     const today = this.toMoment(new Date())
                     .startOf('second')
-    console.log(today);
-    console.log(this.toMoment(new Date())
-                    .startOf('day'));
     this.onPickerChange(this.format(today), { dateMoment: today })
     this.onViewDateChange(today)
     this.onActiveDateChange(today)
+
+    // A naive solution can be:
+    /*
+     this.setState({value:today});
+     this.setExpanded(false)
+    */
+
+    const time = ['hour', 'minute', 'second', 'millisecond'].reduce((acc, part) => {
+      acc[part] = today.get(part)
+      return acc
+    }, {})
+
+    this.time = time;
+    this.setState({toggleNow:true})
 
     return false
   }
@@ -554,16 +566,22 @@ export default class DateField extends Component {
   }
 
   onViewDateChange(viewDate) {
-    console.log('onViewDateChange',viewDate);
     this.setState({
-      viewDate
+      viewDate,
+      toggleNow:false
     })
   }
 
   onActiveDateChange(activeDate) {
-    console.log('onActiveDateChange', activeDate)
     this.setState({
-      activeDate
+      activeDate,
+      toggleNow:false
+    })
+  }
+
+  oncloseNow(){
+    this.setState({
+      toggleNow:false
     })
   }
 
@@ -817,7 +835,6 @@ export default class DateField extends Component {
     if (updateOnDateClick) {
 
       forwardTime(this.time, dateMoment)
-      console.log('OnpickerChange inside',dateString,this.time,dateMoment);
       this.setDate(dateString, { dateMoment })
 
       if (this.props.collapseOnDateClick || isEnter) {
@@ -843,7 +860,6 @@ export default class DateField extends Component {
         })
       }
     }
-    console.log('setDate',dateMoment);
     this.onTextChange(this.format(dateMoment))
     this.onChange(dateMoment)
   }
@@ -873,7 +889,6 @@ export default class DateField extends Component {
     if (this.props.onChange) {
       this.props.onChange(this.format(dateMoment), { dateMoment })
     }
-    console.log("onchange for state",newState)
     this.setState(newState)
   }
 
