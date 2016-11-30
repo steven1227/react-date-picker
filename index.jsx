@@ -123,7 +123,7 @@ var App = React.createClass({
         <h1>testing</h1>
         <div>
           <DateField forceValidDate={true}  clearButton={false}
-          todayButtonText={'nownownow'}  defaultValue={rendong_time} updateOnDateClick={false}  dateFormat="YYYY-MM-DD HH:mm:ss"/>
+          todayButtonText={'nownownow2'}  defaultValue={rendong_time} updateOnDateClick={false}  dateFormat="YYYY-MM-DD HH:mm:ss"/>
           <TransitionView transitionDuration="0.1s">
            <Calendar style={{padding: 10}}/>
             {/*<MonthView dateFormat="DD/MM/YYYY" defaultDate="20/04/2016" onChange={() => {}}/>*/}
