@@ -40,6 +40,7 @@ export default class DateField extends Component {
     super(props)
 
     this.state = {
+      toggleNow:false,
       value: props.defaultValue === undefined ? '' : props.defaultValue,
       expanded: props.defaultExpanded || false,
       focused: false
@@ -52,7 +53,6 @@ export default class DateField extends Component {
 
   render() {
     const props = this.prepareProps(this.props)
-
     const flexProps = assign({}, props)
 
     delete flexProps.activeDate
@@ -83,11 +83,12 @@ export default class DateField extends Component {
     delete flexProps.text
     delete flexProps.theme
     delete flexProps.updateOnDateClick
+    delete flexProps.clearButton
+    delete flexProps.todayButtonText
 
     if (typeof props.cleanup == 'function') {
       props.cleanup(flexProps)
     }
-
     return <Flex
       inline
       row
@@ -270,6 +271,7 @@ export default class DateField extends Component {
     props.children = React.Children.toArray(props.children)
 
     props.expanded = this.prepareExpanded(props)
+
     props.pickerProps = this.preparePickerProps(props)
 
     const input = props.children.filter(FIND_INPUT)[0]
@@ -298,7 +300,6 @@ export default class DateField extends Component {
     }
 
     props.className = this.prepareClassName(props)
-
     return props
   }
 
@@ -399,13 +400,13 @@ export default class DateField extends Component {
         },
 
         footer,
-
         focusOnNavMouseDown: false,
         focusOnFooterMouseDown: false,
 
         insideField: true,
         showClock: props.showClock,
-
+        todayButtonText:this.props.todayButtonText,
+        clearButton:this.props.clearButton,
         getTransitionTime: this.getTime,
 
         updateOnWheel: props.updateOnWheel,
@@ -430,7 +431,7 @@ export default class DateField extends Component {
         date: date || null,
 
         tabIndex: -1,
-
+        toggleNow: this.state.toggleNow,
         viewDate,
         activeDate,
         locale: props.locale,
@@ -438,6 +439,7 @@ export default class DateField extends Component {
         onViewDateChange: this.onViewDateChange,
         onActiveDateChange: this.onActiveDateChange,
         onTimeChange: this.onTimeChange,
+        oncloseNow: this.oncloseNow,
 
         onTransitionStart: this.onTransitionStart,
 
@@ -455,8 +457,9 @@ export default class DateField extends Component {
   }
 
   onTimeChange(value, timeFormat) {
-    const timeMoment = this.toMoment(value, { dateFormat: timeFormat })
 
+    const timeMoment = this.toMoment(value, { dateFormat: timeFormat })
+   
     const time = ['hour', 'minute', 'second', 'millisecond'].reduce((acc, part) => {
       acc[part] = timeMoment.get(part)
       return acc
@@ -486,6 +489,10 @@ export default class DateField extends Component {
 
       this.setValue(date, { skipTime: !!this.time })
     }
+    const input = findDOMNode(this.field)
+    if (input) {
+      input.blur()
+    }
 
     this.setExpanded(false)
   }
@@ -496,11 +503,24 @@ export default class DateField extends Component {
 
   onFooterTodayClick() {
     const today = this.toMoment(new Date())
-                    .startOf('day')
-
+                    .startOf('second')
     this.onPickerChange(this.format(today), { dateMoment: today })
     this.onViewDateChange(today)
     this.onActiveDateChange(today)
+
+    // A naive solution can be:
+    /*
+     this.setState({value:today});
+     this.setExpanded(false)
+    */
+
+    const time = ['hour', 'minute', 'second', 'millisecond'].reduce((acc, part) => {
+      acc[part] = today.get(part)
+      return acc
+    }, {})
+
+    this.time = time;
+    this.setState({toggleNow:true})
 
     return false
   }
@@ -553,13 +573,21 @@ export default class DateField extends Component {
 
   onViewDateChange(viewDate) {
     this.setState({
-      viewDate
+      viewDate,
+      toggleNow:false
     })
   }
 
   onActiveDateChange(activeDate) {
     this.setState({
-      activeDate
+      activeDate,
+      toggleNow:false
+    })
+  }
+
+  oncloseNow(){
+    this.setState({
+      toggleNow:false
     })
   }
 
@@ -811,8 +839,8 @@ export default class DateField extends Component {
     const updateOnDateClick = forceUpdate ? true : this.props.updateOnDateClick || isEnter
 
     if (updateOnDateClick) {
-      forwardTime(this.time, dateMoment)
 
+      forwardTime(this.time, dateMoment)
       this.setDate(dateString, { dateMoment })
 
       if (this.props.collapseOnDateClick || isEnter) {
@@ -838,7 +866,6 @@ export default class DateField extends Component {
         })
       }
     }
-
     this.onTextChange(this.format(dateMoment))
     this.onChange(dateMoment)
   }
@@ -868,7 +895,6 @@ export default class DateField extends Component {
     if (this.props.onChange) {
       this.props.onChange(this.format(dateMoment), { dateMoment })
     }
-
     this.setState(newState)
   }
 

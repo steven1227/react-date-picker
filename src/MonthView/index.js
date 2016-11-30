@@ -606,6 +606,8 @@ export default class MonthView extends Component {
     delete basicViewProps.focusOnNavMouseDown
     delete basicViewProps.footer
     delete basicViewProps.footerClearDate
+    delete basicViewProps.clearButton
+    delete basicViewProps.todayButtonText
 
     delete basicViewProps.getTransitionTime
 

@@ -170,7 +170,7 @@ Footer.defaultProps = {
   buttonFactory: Button,
 
   todayButton: true,
-  clearButton: true,
+  clearButton: false, //the original option is true;
   okButton: true,
   cancelButton: true,
 

@@ -39,6 +39,10 @@ export default class ClockInput extends Component {
 
     this.value = props.value !== undefined ? props.value : this.state.value
 
+    if(this.props.toggleNow){
+      this.value = this.props.nowValue
+    }
+
     const className = join(
       props.className,
       'react-date-picker__clock-input',
@@ -58,6 +62,9 @@ export default class ClockInput extends Component {
     delete flexProps.theme
     delete flexProps.viewIndex
     delete flexProps.wrapTime
+    delete flexProps.nowValue
+    delete flexProps.toggleNow
+    delete flexProps.oncloseNow
 
     if (typeof this.props.cleanup == 'function') {
       this.props.cleanup(flexProps)
@@ -116,6 +123,7 @@ export default class ClockInput extends Component {
   }
 
   onChange(value) {
+    this.props.oncloseNow();
     if (this.props.value === undefined) {
       this.setState({
         value

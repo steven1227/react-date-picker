@@ -16,7 +16,6 @@ export default class Calendar extends Component {
 
   constructor(props) {
     super(props)
-
     this.state = {
       timeFocused: false
     }
@@ -50,6 +49,8 @@ export default class Calendar extends Component {
     delete monthViewProps.showClock
     delete monthViewProps.updateOnWheel
     delete monthViewProps.wrapTime
+    delete monthViewProps.toggleNow
+    delete monthViewProps.oncloseNow
 
     if (typeof this.props.cleanup == 'function') {
       this.props.cleanup(monthViewProps)
@@ -132,9 +133,7 @@ export default class Calendar extends Component {
 
   renderClockInput() {
     const clockInput = null
-
     const readOnly = this.props.readOnly
-
     const clockInputProps = {
       ref: (clkInput) => { this.clockInput = clkInput },
       viewIndex: this.props.viewIndex,
@@ -143,7 +142,10 @@ export default class Calendar extends Component {
       onFocus: this.onClockInputFocus,
       onBlur: this.onClockInputBlur,
       onChange: this.onTimeChange,
-      onMouseDown: this.onClockInputMouseDown
+      onMouseDown: this.onClockInputMouseDown,
+      nowValue: this.props.activeDate,
+      toggleNow:this.props.toggleNow,
+      oncloseNow:this.props.oncloseNow
     }
 
     assignDefined(clockInputProps, {
@@ -200,7 +202,6 @@ export default class Calendar extends Component {
     if (moment == null) {
       return
     }
-
     view.onChange({
       dateMoment: moment,
       timestamp: +moment

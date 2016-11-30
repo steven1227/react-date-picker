@@ -108,6 +108,7 @@ export default class DateFormatInput extends Component {
     delete inputProps.minDate
     delete inputProps.stopPropagation
     delete inputProps.updateOnWheel
+    delete inputProps.eventAct
 
     if (typeof props.cleanup == 'function') {
       props.cleanup(inputProps)
@@ -119,9 +120,10 @@ export default class DateFormatInput extends Component {
       onFocus={this.onFocus}
       onBlur={this.onBlur}
       value={displayValue}
-      onKeyDown={this.onKeyDown}
-      onWheel={this.onWheel}
-      onChange={this.onChange}
+      onKeyDown={this.props.eventAct?this.onKeyDown:null}
+      onWheel={this.props.eventAct?this.onWheel:null}
+      onChange={this.props.eventAct?this.onChange:null}
+      readOnly={!this.props.eventAct?'readOnly':null}
     />
   }
 
@@ -280,6 +282,8 @@ export default class DateFormatInput extends Component {
       value: newValue,
       stop: false
     }
+
+
 
     if (this.props.afterKeyDown && type == 'keydown') {
       this.props.afterKeyDown(config)
