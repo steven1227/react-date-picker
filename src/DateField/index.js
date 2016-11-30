@@ -489,6 +489,11 @@ export default class DateField extends Component {
 
       this.setValue(date, { skipTime: !!this.time })
     }
+    const input = findDOMNode(this.field)
+    console.log(input);
+    if (input) {
+      input.blur()
+    }
 
     this.setExpanded(false)
   }
