@@ -46,7 +46,7 @@ export default class DateFormatSpinnerInput extends Component {
       onKeyDown,
       onChange,
       disabled,
-
+      eventAct:true,
       dateFormat: props.dateFormat === undefined ? inputProps.dateFormat : props.dateFormat,
       stopPropagation: props.stopPropagation,
       updateOnWheel: props.updateOnWheel,
