@@ -478,7 +478,15 @@ export default class DateField extends Component {
 
     this.setDate(dateString, assign(config, { dateMoment }))
   }
-
+  onQuickBlur(){
+      const input = findDOMNode(this.field)
+      if (input) {
+          input.blur()
+      }
+      this.setState({
+          focused: false
+      });
+  }
   onFooterOkClick() {
     const activeDate = this.p.activeDate
 
@@ -489,15 +497,12 @@ export default class DateField extends Component {
 
       this.setValue(date, { skipTime: !!this.time })
     }
-    const input = findDOMNode(this.field)
-    if (input) {
-      input.blur()
-    }
-
-    this.setExpanded(false)
+      this.onQuickBlur()
+      this.setExpanded(false)
   }
 
   onFooterCancelClick() {
+    this.onQuickBlur()
     this.setExpanded(false)
   }
 
