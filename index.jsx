@@ -31,7 +31,7 @@ class NotificationSystem extends React.Component {
         this.setState((prevState) => {
             return {count: prevState.count + 1};
         });
-        return this.setState({
+        this.setState({
             notifications: this.state.notifications.add({
                 message: `Lazy Loading Finish`,
                 key: newCount,
@@ -43,7 +43,7 @@ class NotificationSystem extends React.Component {
                 barStyle:{
                     left:'auto',
                     bottom:'unset',
-                    top: '2rem',
+                    top: '0.5rem',
                     right: '-100%',
                     padding: '1rem 1rem 1rem 1rem',
                     width: 'auto',
@@ -80,10 +80,10 @@ class NotificationSystem extends React.Component {
                     notifications: this.state.notifications.delete(notification)
                 })}
                 barStyleFactory ={(index, style) => {
-                    return Object.assign({}, style, { top: 2 + index * 4 + 'rem' });
+                    return Object.assign({}, style, { top: 0.5 + index * 4 + 'rem' });
                 }}
                 activeBarStyleFactory ={(index, style) => {
-                    return Object.assign({}, style, { top: 2 + index * 4 + 'rem' });
+                    return Object.assign({}, style, { top: 0.5 + index * 4 + 'rem' });
                 }}
             />
             </div>

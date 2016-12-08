@@ -16,6 +16,7 @@
   "author": "ZippyUI <contact@zippyui.com>",
   "license": "MIT",
   "dependencies": {
+    "immutable": "^3.8.1",
     "lodash.throttle": "^4.0.1",
     "moment": "^2.17.0",
     "object-assign": "4.0.1",
@@ -24,6 +25,7 @@
     "react-field": "2.0.2",
     "react-flex": "2.2.7",
     "react-inline-block": "2.0.0",
+    "react-notification": "^6.5.1",
     "react-notify-resize": "1.0.3",
     "react-style-normalizer": "1.2.8"
   },

@@ -2,7 +2,7 @@
   border: 1px solid $FIELD_BORDER_COLOR;
 
   &.react-date-field--focused {
-    border: 1px solid $ACTIVE_COLOR;
+    border: 1px solid;
   }
 
   & > .react-date-field__picker {
