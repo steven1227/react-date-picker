@@ -14,6 +14,9 @@ import { NotificationStack } from 'react-notification';
 import { OrderedSet } from 'immutable';
 
 
+import SlackFeedback from 'react-slack-feedback';
+import $ from 'jquery';
+
 class NotificationSystem extends React.Component {
     constructor() {
         super();
@@ -90,15 +93,78 @@ class NotificationSystem extends React.Component {
         );
     }
 }
-var App = React.createClass({
 
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "text/plain");
+var data = new FormData();
+data.append( "json", JSON.stringify( 'payload=' + JSON.stringify({
+        "text": "test"
+    })) );
+
+const url ='https://hooks.slack.com/services/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'
+function sendToSlack(payload) {
+    // $.ajax({
+    //     data: 'payload=' + JSON.stringify({
+    //         "text": "test"
+    //     }),
+    //     dataType: 'json',
+    //     type: 'POST',
+    //     url: url
+    // });
+
+
+    fetch(url, {
+        method: 'POST',
+        mode:'cors',
+        body:'payload=' + JSON.stringify({
+                "text": "testliurendong"
+            }),
+        headers: new Headers({
+            "Content-Type":"application/x-www-form-urlencoded"
+        })
+    }).then(function() { /* handle response */ });
+}
+
+
+
+
+
+function uploadImage(file) {
+    var form = new FormData();
+    form.append('image', file);
+
+    fetch('/api/upload', {
+        method: 'POST',
+        body: form
+    })
+        .then(res => {
+            console.log(res.status, res.statusText);
+            if (res.status < 200 || res.status >= 300) {
+                this.uploadError(res.statusText);
+            }
+
+            return res.json();
+        })
+        .then(url => this.imageUploaded(url));
+}
+
+
+var App = React.createClass({
     render: function(){
         let hue_time = '2015-04-24 10:38:45'
-        return <div style={{marginLeft: 500}}>
+        return (
+        <div style={{marginLeft: 500}}>
+            <SlackFeedback
+                onSubmit={sendToSlack}
+                onImageUpload={uploadImage}
+                user="Mark Murray"
+                emoji=":bug:"
+                channel="#OperationTool"
+            />
         <span>testing demo</span>
           <LogtimePicker onChange={onChange}/>
             <NotificationSystem/>
-        </div>
+        </div>)
     }
   })
 

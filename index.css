@@ -11,7 +11,7 @@
     min-width: 100%;
     position: absolute;
     z-index: 100;
-    left: -1px;
+    right: -1px;
     background: white; }
 
 .react-date-field--picker-position-bottom > .react-date-field__picker {
@@ -1904,7 +1904,7 @@
 .react-date-field--theme-default {
   border: 1px solid gray; }
   .react-date-field--theme-default.react-date-field--focused {
-    border: 1px solid #349aef; }
+    border: 1px solid; }
   .react-date-field--theme-default > .react-date-field__picker {
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.34375);
     border: 1px solid #349aef; }

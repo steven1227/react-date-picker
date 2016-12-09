@@ -1,7 +1,6 @@
 module.exports = [
   {
     test: /\.(js|jsx)$/,
-    exclude: /node_modules/,
     loader: 'babel'
   },
   {
@@ -10,7 +9,6 @@ module.exports = [
   },
   {
     test: /\.scss$/,
-    exclude: /node_modules/,
     loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader'
   },
   {
